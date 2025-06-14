@@ -8,7 +8,7 @@ const CTA = () => {
       <div className="max-w-4xl mx-auto text-center">
         <div className="bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-3xl p-12 relative overflow-hidden">
           {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/20 via-transparent to-zinc-700/20 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10 rounded-3xl"></div>
           
           <div className="relative z-10">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -21,7 +21,7 @@ const CTA = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <Button className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-2xl">
+              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-xl shadow-blue-900/20">
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
