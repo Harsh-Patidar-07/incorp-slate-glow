@@ -102,17 +102,28 @@ const BusinessTypes = () => {
         </div>
 
         <Tabs defaultValue="shops" className="w-full">
-          <div className="overflow-x-auto pb-4 mb-8">
-            <TabsList className="inline-flex min-w-full lg:w-full bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-2">
+          {/* New Grid-based Tab Selector */}
+          <div className="mb-12">
+            <TabsList className="w-full bg-transparent p-0 h-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {Object.entries(businessTypes).map(([key, type]) => (
                 <TabsTrigger 
                   key={key} 
                   value={key}
-                  className="flex-shrink-0 data-[state=active]:bg-zinc-800/80 data-[state=active]:text-white rounded-xl py-3 px-4 text-zinc-400 hover:text-zinc-200 transition-all duration-200 whitespace-nowrap"
+                  className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-6 h-auto flex flex-col items-center gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white"
                 >
-                  <type.icon className="h-4 w-4 mr-2 flex-shrink-0" />
-                  <span className="hidden sm:inline">{type.shortTitle}</span>
-                  <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
+                  {/* Active indicator */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-2xl transition-opacity duration-300`}></div>
+                  
+                  {/* Icon with gradient background */}
+                  <div className={`relative w-12 h-12 bg-gradient-to-br ${type.gradient} rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300`}>
+                    <type.icon className="h-6 w-6 text-white" />
+                  </div>
+                  
+                  {/* Title */}
+                  <span className="text-sm font-medium text-center leading-tight">
+                    <span className="hidden sm:inline">{type.shortTitle}</span>
+                    <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
+                  </span>
                 </TabsTrigger>
               ))}
             </TabsList>
