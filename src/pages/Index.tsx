@@ -11,30 +11,25 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/50 via-black to-zinc-800/30" />
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-radial from-zinc-400/20 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-radial from-zinc-600/20 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
-          <div className="grid grid-cols-8 grid-rows-8 gap-8 opacity-5">
-            {Array.from({ length: 64 }).map((_, i) => (
-              <div key={i} className="w-2 h-2 bg-zinc-400 rounded-full" />
-            ))}
-          </div>
-        </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Optimized Background Pattern - reduced complexity for better performance */}
+      <div className="fixed inset-0 opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/30 via-black to-zinc-800/20" />
+        <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-radial from-zinc-400/15 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-radial from-zinc-600/15 to-transparent rounded-full blur-3xl" />
       </div>
       
-      <Header />
-      <Hero />
-      <Features />
-      <BusinessTypes />
-      <Services />
-      <Stats />
-      <Testimonials />
-      <CTA />
-      <Footer />
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <Features />
+        <BusinessTypes />
+        <Services />
+        <Stats />
+        <Testimonials />
+        <CTA />
+        <Footer />
+      </div>
     </div>
   );
 };

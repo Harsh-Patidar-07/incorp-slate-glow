@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -88,39 +87,39 @@ const BusinessTypes = () => {
   };
 
   return (
-    <section className="py-24 px-4 relative">
+    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-2">
             <span className="bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
               Business Types We Serve
             </span>
           </h2>
-          <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto px-4">
             Tailored solutions for every type of business in India
           </p>
         </div>
 
         <Tabs defaultValue="shops" className="w-full">
-          {/* New Grid-based Tab Selector */}
-          <div className="mb-12">
-            <TabsList className="w-full bg-transparent p-0 h-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {/* Mobile-optimized Tab Selector */}
+          <div className="mb-8 sm:mb-12">
+            <TabsList className="w-full bg-transparent p-0 h-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4">
               {Object.entries(businessTypes).map(([key, type]) => (
                 <TabsTrigger 
                   key={key} 
                   value={key}
-                  className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-6 h-auto flex flex-col items-center gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white"
+                  className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-lg sm:rounded-2xl p-3 sm:p-4 lg:p-6 h-auto flex flex-col items-center gap-2 sm:gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white"
                 >
                   {/* Active indicator */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-2xl transition-opacity duration-300`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-lg sm:rounded-2xl transition-opacity duration-300`}></div>
                   
                   {/* Icon with gradient background */}
-                  <div className={`relative w-12 h-12 bg-gradient-to-br ${type.gradient} rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300`}>
-                    <type.icon className="h-6 w-6 text-white" />
+                  <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${type.gradient} rounded-lg sm:rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300`}>
+                    <type.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
                   </div>
                   
                   {/* Title */}
-                  <span className="text-sm font-medium text-center leading-tight">
+                  <span className="text-xs sm:text-sm font-medium text-center leading-tight">
                     <span className="hidden sm:inline">{type.shortTitle}</span>
                     <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
                   </span>
@@ -130,17 +129,17 @@ const BusinessTypes = () => {
           </div>
 
           {Object.entries(businessTypes).map(([key, type]) => (
-            <TabsContent key={key} value={key} className="mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <TabsContent key={key} value={key} className="mt-6 sm:mt-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div className="lg:col-span-1">
                   <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl h-full">
-                    <CardContent className="p-8">
-                      <div className={`w-16 h-16 bg-gradient-to-br ${type.gradient} rounded-2xl flex items-center justify-center mb-6`}>
-                        <type.icon className="h-8 w-8 text-white" />
+                    <CardContent className="p-6 sm:p-8">
+                      <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${type.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}>
+                        <type.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                       </div>
-                      <h3 className="text-2xl font-bold text-white mb-4">{type.title}</h3>
-                      <p className="text-zinc-400 leading-relaxed mb-6">{type.description}</p>
-                      <Button className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg`}>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">{type.title}</h3>
+                      <p className="text-zinc-400 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">{type.description}</p>
+                      <Button className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg text-sm sm:text-base py-2 sm:py-3`}>
                         Get Started
                       </Button>
                     </CardContent>
@@ -148,19 +147,19 @@ const BusinessTypes = () => {
                 </div>
 
                 <div className="lg:col-span-2">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {type.services.map((service, index) => (
                       <Card key={index} className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group">
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-start mb-4">
-                            <h4 className="text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight">{service.name}</h4>
-                            <span className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${type.gradient} text-white opacity-80 whitespace-nowrap ml-2`}>
+                        <CardContent className="p-4 sm:p-6">
+                          <div className="flex justify-between items-start mb-3 sm:mb-4">
+                            <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight flex-1 pr-2">{service.name}</h4>
+                            <span className={`text-xs px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r ${type.gradient} text-white opacity-80 whitespace-nowrap`}>
                               {service.duration}
                             </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-2xl font-bold text-white">{service.price}</span>
-                            <Button size="sm" className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0 transition-all duration-200">
+                            <span className="text-lg sm:text-2xl font-bold text-white">{service.price}</span>
+                            <Button size="sm" className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0 transition-all duration-200 text-xs sm:text-sm">
                               Select
                             </Button>
                           </div>
