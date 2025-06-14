@@ -26,7 +26,7 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-2xl shadow-blue-900/20">
+          <Button className="bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 hover:from-blue-400 hover:via-cyan-400 hover:to-blue-500 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-2xl shadow-blue-900/20">
             Start Your Journey
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

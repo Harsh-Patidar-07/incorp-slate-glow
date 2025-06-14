@@ -10,6 +10,7 @@ const BusinessTypes = () => {
     shops: {
       icon: Store,
       title: "Retail & Shops",
+      shortTitle: "Retail",
       description: "Perfect for retail stores, boutiques, and small businesses",
       gradient: "from-emerald-600 to-teal-700",
       services: [
@@ -22,6 +23,7 @@ const BusinessTypes = () => {
     factories: {
       icon: Factory,
       title: "Manufacturing & Factories",
+      shortTitle: "Manufacturing",
       description: "Comprehensive solutions for manufacturing businesses",
       gradient: "from-orange-600 to-red-700",
       services: [
@@ -34,6 +36,7 @@ const BusinessTypes = () => {
     fssai: {
       icon: Utensils,
       title: "Food & Beverages",
+      shortTitle: "Food & Beverages",
       description: "FSSAI and food business licensing solutions",
       gradient: "from-purple-600 to-pink-700",
       services: [
@@ -46,6 +49,7 @@ const BusinessTypes = () => {
     transport: {
       icon: Truck,
       title: "Transport & Logistics",
+      shortTitle: "Transport",
       description: "Licensing for transport and logistics businesses",
       gradient: "from-blue-600 to-cyan-700",
       services: [
@@ -58,6 +62,7 @@ const BusinessTypes = () => {
     corporate: {
       icon: Building2,
       title: "Corporate Entities",
+      shortTitle: "Corporate",
       description: "Private Limited, LLP, and corporate structures",
       gradient: "from-indigo-600 to-purple-700",
       services: [
@@ -70,6 +75,7 @@ const BusinessTypes = () => {
     professional: {
       icon: Briefcase,
       title: "Professional Services",
+      shortTitle: "Professional",
       description: "Consultancy, agencies, and professional service firms",
       gradient: "from-rose-600 to-orange-700",
       services: [
@@ -83,7 +89,7 @@ const BusinessTypes = () => {
 
   return (
     <section className="py-24 px-4 relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
@@ -96,18 +102,21 @@ const BusinessTypes = () => {
         </div>
 
         <Tabs defaultValue="shops" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-2 mb-8">
-            {Object.entries(businessTypes).map(([key, type]) => (
-              <TabsTrigger 
-                key={key} 
-                value={key}
-                className="data-[state=active]:bg-zinc-800/80 data-[state=active]:text-white rounded-xl py-3 px-4 text-zinc-400 hover:text-zinc-200 transition-all duration-200"
-              >
-                <type.icon className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">{type.title.split(' ')[0]}</span>
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="overflow-x-auto pb-4 mb-8">
+            <TabsList className="inline-flex min-w-full lg:w-full bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-2">
+              {Object.entries(businessTypes).map(([key, type]) => (
+                <TabsTrigger 
+                  key={key} 
+                  value={key}
+                  className="flex-shrink-0 data-[state=active]:bg-zinc-800/80 data-[state=active]:text-white rounded-xl py-3 px-4 text-zinc-400 hover:text-zinc-200 transition-all duration-200 whitespace-nowrap"
+                >
+                  <type.icon className="h-4 w-4 mr-2 flex-shrink-0" />
+                  <span className="hidden sm:inline">{type.shortTitle}</span>
+                  <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
           {Object.entries(businessTypes).map(([key, type]) => (
             <TabsContent key={key} value={key} className="mt-8">
@@ -120,7 +129,7 @@ const BusinessTypes = () => {
                       </div>
                       <h3 className="text-2xl font-bold text-white mb-4">{type.title}</h3>
                       <p className="text-zinc-400 leading-relaxed mb-6">{type.description}</p>
-                      <Button className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full`}>
+                      <Button className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg`}>
                         Get Started
                       </Button>
                     </CardContent>
@@ -133,14 +142,14 @@ const BusinessTypes = () => {
                       <Card key={index} className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group">
                         <CardContent className="p-6">
                           <div className="flex justify-between items-start mb-4">
-                            <h4 className="text-lg font-semibold text-white group-hover:text-zinc-100">{service.name}</h4>
-                            <span className={`text-sm px-3 py-1 rounded-full bg-gradient-to-r ${type.gradient} text-white opacity-80`}>
+                            <h4 className="text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight">{service.name}</h4>
+                            <span className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${type.gradient} text-white opacity-80 whitespace-nowrap ml-2`}>
                               {service.duration}
                             </span>
                           </div>
                           <div className="flex justify-between items-center">
                             <span className="text-2xl font-bold text-white">{service.price}</span>
-                            <Button size="sm" className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0">
+                            <Button size="sm" className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0 transition-all duration-200">
                               Select
                             </Button>
                           </div>
