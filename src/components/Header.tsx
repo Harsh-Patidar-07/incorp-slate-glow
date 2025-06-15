@@ -56,22 +56,43 @@ const Header = memo(() => {
     { name: "Contact", href: "#contact" },
   ];
 
-  // Throttled scroll handler to prevent jank
+  // Ultra-optimized scroll handler for 120fps+
   useEffect(() => {
+    let rafId: number;
+    let lastScrollY = 0;
     let ticking = false;
     
+    const updateScrollState = () => {
+      const scrollY = window.scrollY;
+      
+      // Only update if scroll position changed significantly
+      if (Math.abs(scrollY - lastScrollY) > 5) {
+        setIsScrolled(scrollY > 20);
+        lastScrollY = scrollY;
+      }
+      
+      ticking = false;
+    };
+
     const handleScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
-          ticking = false;
-        });
+        rafId = requestAnimationFrame(updateScrollState);
         ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Use passive listener for maximum performance
+    window.addEventListener('scroll', handleScroll, { 
+      passive: true, 
+      capture: false 
+    });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   const toggleMenu = useCallback(() => {
@@ -91,13 +112,36 @@ const Header = memo(() => {
   }, []);
 
   return (
-    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4" style={{ willChange: 'transform' }}>
-      <nav className={`backdrop-blur-lg border border-zinc-800/50 rounded-2xl px-6 py-4 shadow-2xl transition-all duration-300 ${
-        isScrolled ? 'bg-black/40' : 'bg-black/20'
-      }`} style={{ contain: 'layout style paint' }}>
+    <header 
+      className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4" 
+      style={{ 
+        willChange: 'transform',
+        contain: 'style layout',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        transform: 'translate3d(-50%, 0, 0)'
+      }}
+    >
+      <nav 
+        className={`backdrop-blur-lg border border-zinc-800/50 rounded-2xl px-6 py-4 shadow-2xl transition-all duration-200 ${
+          isScrolled ? 'bg-black/40' : 'bg-black/20'
+        }`} 
+        style={{ 
+          contain: 'layout style paint',
+          willChange: 'background-color',
+          transform: 'translate3d(0,0,0)',
+          backfaceVisibility: 'hidden'
+        }}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-zinc-400 to-zinc-600 rounded-xl flex items-center justify-center">
+            <div 
+              className="w-8 h-8 bg-gradient-to-br from-zinc-400 to-zinc-600 rounded-xl flex items-center justify-center"
+              style={{ 
+                transform: 'translate3d(0,0,0)',
+                willChange: 'auto'
+              }}
+            >
               <span className="text-black font-bold text-sm">IC</span>
             </div>
             <span className="text-xl font-bold text-white">InCorp</span>
@@ -108,7 +152,8 @@ const Header = memo(() => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-zinc-300 hover:text-white transition-colors duration-200 font-medium"
+                className="text-zinc-300 hover:text-white transition-colors duration-150 font-medium"
+                style={{ willChange: 'color' }}
               >
                 {item.name}
               </a>
@@ -119,21 +164,30 @@ const Header = memo(() => {
             <Button 
               variant="ghost" 
               onClick={handleSignIn}
-              className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl"
+              className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all duration-150"
+              style={{ willChange: 'background-color, color' }}
             >
               Sign In
             </Button>
             <Button 
               onClick={handleGetStarted}
-              className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0"
+              className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0 transition-all duration-150"
+              style={{ 
+                willChange: 'background-image',
+                transform: 'translate3d(0,0,0)'
+              }}
             >
               Get Started
             </Button>
           </div>
 
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-white transition-transform duration-150"
             onClick={toggleMenu}
+            style={{ 
+              willChange: 'transform',
+              transform: 'translate3d(0,0,0)'
+            }}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
