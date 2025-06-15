@@ -5,6 +5,35 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Store, Factory, Utensils, Truck, Building2, Briefcase } from "lucide-react";
 
+interface BusinessService {
+  name: string;
+  price: string;
+  duration: string;
+}
+
+interface BusinessType {
+  icon: React.ComponentType<any>;
+  title: string;
+  shortTitle: string;
+  description: string;
+  gradient: string;
+  services: BusinessService[];
+}
+
+interface TabTriggerProps {
+  tabKey: string;
+  type: BusinessType;
+}
+
+interface TabContentProps {
+  type: BusinessType;
+}
+
+interface ServiceCardProps {
+  service: BusinessService;
+  gradient: string;
+}
+
 const BusinessTypes = memo(() => {
   const businessTypes = useMemo(() => ({
     shops: {
@@ -121,7 +150,7 @@ const BusinessTypes = memo(() => {
   );
 });
 
-const TabTriggerComponent = memo(({ tabKey, type }) => {
+const TabTriggerComponent = memo<TabTriggerProps>(({ tabKey, type }) => {
   return (
     <TabsTrigger 
       value={tabKey}
@@ -141,7 +170,7 @@ const TabTriggerComponent = memo(({ tabKey, type }) => {
   );
 });
 
-const TabContentComponent = memo(({ type }) => {
+const TabContentComponent = memo<TabContentProps>(({ type }) => {
   const handleGetStarted = useCallback(() => {
     console.log(`Get started clicked for ${type.title}`);
   }, [type.title]);
@@ -177,7 +206,7 @@ const TabContentComponent = memo(({ type }) => {
   );
 });
 
-const ServiceCard = memo(({ service, gradient }) => {
+const ServiceCard = memo<ServiceCardProps>(({ service, gradient }) => {
   const handleSelect = useCallback(() => {
     console.log(`Service selected: ${service.name}`);
   }, [service.name]);

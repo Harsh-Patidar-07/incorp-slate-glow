@@ -2,6 +2,11 @@
 import React, { memo, useMemo } from "react";
 import { Building, Mail, Phone, MapPin, Twitter, Linkedin, Instagram } from "lucide-react";
 
+interface FooterColumnProps {
+  category: string;
+  links: string[];
+}
+
 const Footer = memo(() => {
   const footerLinks = useMemo(() => ({
     "Services": [
@@ -88,7 +93,7 @@ const Footer = memo(() => {
   );
 });
 
-const FooterColumn = memo(({ category, links }) => {
+const FooterColumn = memo<FooterColumnProps>(({ category, links }) => {
   return (
     <div>
       <h3 className="text-white font-semibold mb-4">{category}</h3>

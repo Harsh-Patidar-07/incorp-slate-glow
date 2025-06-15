@@ -3,6 +3,17 @@ import React, { memo, useMemo } from "react";
 import { Shield, Zap, Users, FileText, Clock, Award } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
+interface Feature {
+  icon: React.ComponentType<any>;
+  title: string;
+  description: string;
+  gradient: string;
+}
+
+interface FeatureCardProps {
+  feature: Feature;
+}
+
 const Features = memo(() => {
   const features = useMemo(() => [
     {
@@ -67,7 +78,7 @@ const Features = memo(() => {
   );
 });
 
-const FeatureCard = memo(({ feature }) => {
+const FeatureCard = memo<FeatureCardProps>(({ feature }) => {
   return (
     <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/50 transition-all duration-300 group relative overflow-hidden will-change-transform">
       <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>

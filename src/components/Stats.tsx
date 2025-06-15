@@ -1,6 +1,16 @@
 
 import React, { memo, useMemo } from "react";
 
+interface Stat {
+  number: string;
+  label: string;
+  sublabel: string;
+}
+
+interface StatCardProps {
+  stat: Stat;
+}
+
 const Stats = memo(() => {
   const stats = useMemo(() => [
     { number: "1000+", label: "Companies Incorporated", sublabel: "And growing every month" },
@@ -35,7 +45,7 @@ const Stats = memo(() => {
   );
 });
 
-const StatCard = memo(({ stat }) => {
+const StatCard = memo<StatCardProps>(({ stat }) => {
   return (
     <div className="text-center group">
       <div className="bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 hover:bg-zinc-800/50 transition-all duration-300 group-hover:scale-105 will-change-transform">

@@ -3,6 +3,13 @@ import React, { useState, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
+interface MobileNavProps {
+  navItems: { name: string; href: string; }[];
+  onClose: () => void;
+  onSignIn: () => void;
+  onGetStarted: () => void;
+}
+
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -90,7 +97,7 @@ const Header = memo(() => {
   );
 });
 
-const MobileNav = memo(({ navItems, onClose, onSignIn, onGetStarted }) => {
+const MobileNav = memo<MobileNavProps>(({ navItems, onClose, onSignIn, onGetStarted }) => {
   return (
     <div className="md:hidden mt-4 pt-4 border-t border-zinc-800">
       <div className="flex flex-col space-y-4">

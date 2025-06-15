@@ -3,6 +3,18 @@ import React, { memo, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+  image: string;
+}
+
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+}
+
 const Testimonials = memo(() => {
   const testimonials = useMemo(() => [
     {
@@ -52,7 +64,7 @@ const Testimonials = memo(() => {
   );
 });
 
-const TestimonialCard = memo(({ testimonial }) => {
+const TestimonialCard = memo<TestimonialCardProps>(({ testimonial }) => {
   const initials = testimonial.name.split(' ').map(n => n[0]).join('');
 
   return (

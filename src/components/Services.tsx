@@ -4,6 +4,19 @@ import { Building, Briefcase, Calculator, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+interface Service {
+  icon: React.ComponentType<any>;
+  title: string;
+  description: string;
+  features: string[];
+  price: string;
+  gradient: string;
+}
+
+interface ServiceCardProps {
+  service: Service;
+}
+
 const Services = memo(() => {
   const services = useMemo(() => [
     {
@@ -64,7 +77,7 @@ const Services = memo(() => {
   );
 });
 
-const ServiceCard = memo(({ service }) => {
+const ServiceCard = memo<ServiceCardProps>(({ service }) => {
   const handleLearnMore = useCallback(() => {
     console.log(`Learn more clicked for ${service.title}`);
   }, [service.title]);
