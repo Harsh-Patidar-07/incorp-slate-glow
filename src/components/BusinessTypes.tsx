@@ -1,11 +1,12 @@
-import { useState } from "react";
+
+import React, { useState, memo, useMemo, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Store, Factory, Utensils, Truck, Building2, Briefcase } from "lucide-react";
 
-const BusinessTypes = () => {
-  const businessTypes = {
+const BusinessTypes = memo(() => {
+  const businessTypes = useMemo(() => ({
     shops: {
       icon: Store,
       title: "Retail & Shops",
@@ -84,7 +85,7 @@ const BusinessTypes = () => {
         { name: "Complete Professional Setup", price: "₹8,999", duration: "10-15 days" }
       ]
     }
-  };
+  }), []);
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative">
@@ -101,80 +102,113 @@ const BusinessTypes = () => {
         </div>
 
         <Tabs defaultValue="shops" className="w-full">
-          {/* Mobile-optimized Tab Selector */}
           <div className="mb-8 sm:mb-12">
             <TabsList className="w-full bg-transparent p-0 h-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4">
               {Object.entries(businessTypes).map(([key, type]) => (
-                <TabsTrigger 
-                  key={key} 
-                  value={key}
-                  className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-lg sm:rounded-2xl p-3 sm:p-4 lg:p-6 h-auto flex flex-col items-center gap-2 sm:gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white"
-                >
-                  {/* Active indicator */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-lg sm:rounded-2xl transition-opacity duration-300`}></div>
-                  
-                  {/* Icon with gradient background */}
-                  <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${type.gradient} rounded-lg sm:rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300`}>
-                    <type.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
-                  </div>
-                  
-                  {/* Title */}
-                  <span className="text-xs sm:text-sm font-medium text-center leading-tight">
-                    <span className="hidden sm:inline">{type.shortTitle}</span>
-                    <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
-                  </span>
-                </TabsTrigger>
+                <TabTriggerComponent key={key} tabKey={key} type={type} />
               ))}
             </TabsList>
           </div>
 
           {Object.entries(businessTypes).map(([key, type]) => (
             <TabsContent key={key} value={key} className="mt-6 sm:mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div className="lg:col-span-1">
-                  <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl h-full">
-                    <CardContent className="p-6 sm:p-8">
-                      <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${type.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}>
-                        <type.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">{type.title}</h3>
-                      <p className="text-zinc-400 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">{type.description}</p>
-                      <Button className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg text-sm sm:text-base py-2 sm:py-3`}>
-                        Get Started
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="lg:col-span-2">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                    {type.services.map((service, index) => (
-                      <Card key={index} className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group">
-                        <CardContent className="p-4 sm:p-6">
-                          <div className="flex justify-between items-start mb-3 sm:mb-4">
-                            <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight flex-1 pr-2">{service.name}</h4>
-                            <span className={`text-xs px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r ${type.gradient} text-white opacity-80 whitespace-nowrap`}>
-                              {service.duration}
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-lg sm:text-2xl font-bold text-white">{service.price}</span>
-                            <Button size="sm" className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0 transition-all duration-200 text-xs sm:text-sm">
-                              Select
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <TabContentComponent type={type} />
             </TabsContent>
           ))}
         </Tabs>
       </div>
     </section>
   );
-};
+});
+
+const TabTriggerComponent = memo(({ tabKey, type }) => {
+  return (
+    <TabsTrigger 
+      value={tabKey}
+      className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-lg sm:rounded-2xl p-3 sm:p-4 lg:p-6 h-auto flex flex-col items-center gap-2 sm:gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white will-change-transform"
+    >
+      <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-lg sm:rounded-2xl transition-opacity duration-300`}></div>
+      
+      <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${type.gradient} rounded-lg sm:rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300 will-change-transform`}>
+        <type.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
+      </div>
+      
+      <span className="text-xs sm:text-sm font-medium text-center leading-tight">
+        <span className="hidden sm:inline">{type.shortTitle}</span>
+        <span className="sm:hidden">{type.shortTitle.split(' ')[0]}</span>
+      </span>
+    </TabsTrigger>
+  );
+});
+
+const TabContentComponent = memo(({ type }) => {
+  const handleGetStarted = useCallback(() => {
+    console.log(`Get started clicked for ${type.title}`);
+  }, [type.title]);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className="lg:col-span-1">
+        <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl h-full">
+          <CardContent className="p-6 sm:p-8">
+            <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${type.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}>
+              <type.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">{type.title}</h3>
+            <p className="text-zinc-400 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">{type.description}</p>
+            <Button 
+              onClick={handleGetStarted}
+              className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg text-sm sm:text-base py-2 sm:py-3 will-change-transform`}
+            >
+              Get Started
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          {type.services.map((service, index) => (
+            <ServiceCard key={index} service={service} gradient={type.gradient} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+const ServiceCard = memo(({ service, gradient }) => {
+  const handleSelect = useCallback(() => {
+    console.log(`Service selected: ${service.name}`);
+  }, [service.name]);
+
+  return (
+    <Card className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group will-change-transform">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex justify-between items-start mb-3 sm:mb-4">
+          <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight flex-1 pr-2">{service.name}</h4>
+          <span className={`text-xs px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r ${gradient} text-white opacity-80 whitespace-nowrap`}>
+            {service.duration}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-lg sm:text-2xl font-bold text-white">{service.price}</span>
+          <Button 
+            size="sm" 
+            onClick={handleSelect}
+            className="bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-lg border-0 transition-all duration-200 text-xs sm:text-sm"
+          >
+            Select
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+});
+
+TabTriggerComponent.displayName = "TabTriggerComponent";
+TabContentComponent.displayName = "TabContentComponent";
+ServiceCard.displayName = "ServiceCard";
+BusinessTypes.displayName = "BusinessTypes";
 
 export default BusinessTypes;

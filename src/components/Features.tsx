@@ -1,8 +1,10 @@
+
+import React, { memo, useMemo } from "react";
 import { Shield, Zap, Users, FileText, Clock, Award } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
-const Features = () => {
-  const features = [
+const Features = memo(() => {
+  const features = useMemo(() => [
     {
       icon: Shield,
       title: "Secure & Compliant",
@@ -39,7 +41,7 @@ const Features = () => {
       description: "Trusted by over 1000+ successful startups and established businesses across India.",
       gradient: "from-rose-600 to-red-700"
     }
-  ];
+  ], []);
 
   return (
     <section id="features" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative">
@@ -57,22 +59,31 @@ const Features = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/50 transition-all duration-300 group relative overflow-hidden">
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-              <CardContent className="p-6 sm:p-8 relative z-10">
-                <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <feature.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-zinc-100 transition-colors duration-300">{feature.title}</h3>
-                <p className="text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300 text-sm sm:text-base">{feature.description}</p>
-                <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${feature.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}></div>
-              </CardContent>
-            </Card>
+            <FeatureCard key={index} feature={feature} />
           ))}
         </div>
       </div>
     </section>
   );
-};
+});
+
+const FeatureCard = memo(({ feature }) => {
+  return (
+    <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/50 transition-all duration-300 group relative overflow-hidden will-change-transform">
+      <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+      <CardContent className="p-6 sm:p-8 relative z-10">
+        <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg will-change-transform`}>
+          <feature.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+        </div>
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-zinc-100 transition-colors duration-300">{feature.title}</h3>
+        <p className="text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300 text-sm sm:text-base">{feature.description}</p>
+        <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${feature.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left will-change-transform`}></div>
+      </CardContent>
+    </Card>
+  );
+});
+
+FeatureCard.displayName = "FeatureCard";
+Features.displayName = "Features";
 
 export default Features;

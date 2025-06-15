@@ -1,9 +1,9 @@
 
-import { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
-const Header = () => {
+const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
@@ -13,6 +13,22 @@ const Header = () => {
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
   ];
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prev => !prev);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
+
+  const handleSignIn = useCallback(() => {
+    console.log("Sign in clicked");
+  }, []);
+
+  const handleGetStarted = useCallback(() => {
+    console.log("Get started clicked");
+  }, []);
 
   return (
     <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
@@ -25,7 +41,6 @@ const Header = () => {
             <span className="text-xl font-bold text-white">InCorp</span>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
@@ -39,51 +54,77 @@ const Header = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl">
+            <Button 
+              variant="ghost" 
+              onClick={handleSignIn}
+              className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl"
+            >
               Sign In
             </Button>
-            <Button className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0">
+            <Button 
+              onClick={handleGetStarted}
+              className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0"
+            >
               Get Started
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={toggleMenu}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-zinc-800">
-            <div className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-zinc-300 hover:text-white transition-colors duration-200 font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost" className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl justify-start">
-                  Sign In
-                </Button>
-                <Button className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0 justify-start">
-                  Get Started
-                </Button>
-              </div>
-            </div>
-          </div>
+          <MobileNav 
+            navItems={navItems} 
+            onClose={closeMenu} 
+            onSignIn={handleSignIn}
+            onGetStarted={handleGetStarted}
+          />
         )}
       </nav>
     </header>
   );
-};
+});
+
+const MobileNav = memo(({ navItems, onClose, onSignIn, onGetStarted }) => {
+  return (
+    <div className="md:hidden mt-4 pt-4 border-t border-zinc-800">
+      <div className="flex flex-col space-y-4">
+        {navItems.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="text-zinc-300 hover:text-white transition-colors duration-200 font-medium"
+            onClick={onClose}
+          >
+            {item.name}
+          </a>
+        ))}
+        <div className="flex flex-col space-y-2 pt-4">
+          <Button 
+            variant="ghost" 
+            onClick={onSignIn}
+            className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl justify-start"
+          >
+            Sign In
+          </Button>
+          <Button 
+            onClick={onGetStarted}
+            className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0 justify-start"
+          >
+            Get Started
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+MobileNav.displayName = "MobileNav";
+Header.displayName = "Header";
 
 export default Header;

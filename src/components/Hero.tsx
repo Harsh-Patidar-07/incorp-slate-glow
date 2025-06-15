@@ -1,8 +1,17 @@
 
+import React, { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 
-const Hero = () => {
+const Hero = memo(() => {
+  const handleStartJourney = useCallback(() => {
+    console.log("Start journey clicked");
+  }, []);
+
+  const handleWatchDemo = useCallback(() => {
+    console.log("Watch demo clicked");
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24">
       <div className="max-w-6xl mx-auto text-center relative z-10 w-full">
@@ -26,17 +35,23 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 px-4">
-          <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 hover:from-blue-400 hover:via-cyan-400 hover:to-blue-500 text-white px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-semibold border-0 shadow-2xl shadow-blue-900/20 transition-all duration-300">
+          <Button 
+            onClick={handleStartJourney}
+            className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 hover:from-blue-400 hover:via-cyan-400 hover:to-blue-500 text-white px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-semibold border-0 shadow-2xl shadow-blue-900/20 transition-all duration-300 will-change-transform"
+          >
             Start Your Journey
             <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
-          <Button variant="ghost" className="w-full sm:w-auto text-zinc-300 hover:text-white hover:bg-zinc-800/50 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-semibold border border-zinc-800/50 transition-all duration-300">
+          <Button 
+            variant="ghost" 
+            onClick={handleWatchDemo}
+            className="w-full sm:w-auto text-zinc-300 hover:text-white hover:bg-zinc-800/50 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-semibold border border-zinc-800/50 transition-all duration-300 will-change-transform"
+          >
             <Play className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Watch Demo
           </Button>
         </div>
 
-        {/* Stats Preview - Optimized for mobile */}
         <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto px-4">
           <div className="text-center">
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2">1000+</div>
@@ -54,6 +69,8 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = "Hero";
 
 export default Hero;

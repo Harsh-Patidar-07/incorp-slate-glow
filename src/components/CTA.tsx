@@ -1,13 +1,21 @@
 
+import React, { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Mail } from "lucide-react";
 
-const CTA = () => {
+const CTA = memo(() => {
+  const handleGetStarted = useCallback(() => {
+    console.log("Get started today clicked");
+  }, []);
+
+  const handleScheduleConsultation = useCallback(() => {
+    console.log("Schedule consultation clicked");
+  }, []);
+
   return (
     <section className="py-24 px-4 relative">
       <div className="max-w-4xl mx-auto text-center">
         <div className="bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-3xl p-12 relative overflow-hidden">
-          {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10 rounded-3xl"></div>
           
           <div className="relative z-10">
@@ -21,11 +29,18 @@ const CTA = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-xl shadow-blue-900/20">
+              <Button 
+                onClick={handleGetStarted}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-8 py-6 rounded-2xl text-lg font-semibold border-0 shadow-xl shadow-blue-900/20 will-change-transform"
+              >
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="ghost" className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 px-8 py-6 rounded-2xl text-lg font-semibold border border-zinc-800/50">
+              <Button 
+                variant="ghost" 
+                onClick={handleScheduleConsultation}
+                className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 px-8 py-6 rounded-2xl text-lg font-semibold border border-zinc-800/50 will-change-transform"
+              >
                 Schedule Consultation
               </Button>
             </div>
@@ -45,6 +60,8 @@ const CTA = () => {
       </div>
     </section>
   );
-};
+});
+
+CTA.displayName = "CTA";
 
 export default CTA;
