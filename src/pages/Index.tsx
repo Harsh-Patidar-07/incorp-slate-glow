@@ -12,15 +12,15 @@ import Footer from "@/components/Footer";
 
 const Index = memo(() => {
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Simplified and optimized background pattern */}
-      <div className="fixed inset-0 opacity-5 pointer-events-none will-change-auto">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/20 via-black to-zinc-800/10" />
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-radial from-zinc-400/8 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-radial from-zinc-600/8 to-transparent rounded-full blur-3xl" />
+    <div className="min-h-screen bg-black text-white" style={{ scrollBehavior: 'smooth' }}>
+      {/* Ultra-lightweight background pattern optimized for scroll performance */}
+      <div className="fixed inset-0 opacity-3 pointer-events-none" style={{ contain: 'strict', willChange: 'auto' }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/10 via-black to-zinc-800/5" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-gradient-radial from-zinc-400/4 to-transparent rounded-full blur-3xl" style={{ transform: 'translate3d(0,0,0)' }} />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-radial from-zinc-600/4 to-transparent rounded-full blur-3xl" style={{ transform: 'translate3d(0,0,0)' }} />
       </div>
       
-      <div className="relative z-10">
+      <div className="relative z-10" style={{ contain: 'layout' }}>
         <Header />
         <Hero />
         <Features />

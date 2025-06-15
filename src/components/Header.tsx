@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, memo } from "react";
+import React, { useState, useCallback, memo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -46,6 +46,7 @@ const MobileNav = memo<MobileNavProps>(({ navItems, onClose, onSignIn, onGetStar
 
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -54,6 +55,24 @@ const Header = memo(() => {
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
   ];
+
+  // Throttled scroll handler to prevent jank
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen(prev => !prev);
@@ -72,8 +91,10 @@ const Header = memo(() => {
   }, []);
 
   return (
-    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
-      <nav className="bg-black/20 backdrop-blur-lg border border-zinc-800/50 rounded-2xl px-6 py-4 shadow-2xl">
+    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4" style={{ willChange: 'transform' }}>
+      <nav className={`backdrop-blur-lg border border-zinc-800/50 rounded-2xl px-6 py-4 shadow-2xl transition-all duration-300 ${
+        isScrolled ? 'bg-black/40' : 'bg-black/20'
+      }`} style={{ contain: 'layout style paint' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-zinc-400 to-zinc-600 rounded-xl flex items-center justify-center">

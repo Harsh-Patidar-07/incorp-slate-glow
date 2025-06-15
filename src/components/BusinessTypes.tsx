@@ -117,7 +117,7 @@ const BusinessTypes = memo(() => {
   }), []);
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative">
+    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative" style={{ contain: 'layout' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-2">
@@ -154,11 +154,12 @@ const TabTriggerComponent = memo<TabTriggerProps>(({ tabKey, type }) => {
   return (
     <TabsTrigger 
       value={tabKey}
-      className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-lg sm:rounded-2xl p-3 sm:p-4 lg:p-6 h-auto flex flex-col items-center gap-2 sm:gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white will-change-transform"
+      className="group relative data-[state=active]:bg-transparent bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-sm rounded-lg sm:rounded-2xl p-3 sm:p-4 lg:p-6 h-auto flex flex-col items-center gap-2 sm:gap-3 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700/70 transition-all duration-300 data-[state=active]:border-zinc-600/80 data-[state=active]:text-white"
+      style={{ contain: 'layout style paint', transform: 'translate3d(0,0,0)' }}
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 group-data-[state=active]:opacity-10 rounded-lg sm:rounded-2xl transition-opacity duration-300`}></div>
       
-      <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${type.gradient} rounded-lg sm:rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300 will-change-transform`}>
+      <div className={`relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${type.gradient} rounded-lg sm:rounded-xl flex items-center justify-center group-data-[state=active]:scale-110 transition-transform duration-300`} style={{ transform: 'translate3d(0,0,0)' }}>
         <type.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
       </div>
       
@@ -178,7 +179,7 @@ const TabContentComponent = memo<TabContentProps>(({ type }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
       <div className="lg:col-span-1">
-        <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl h-full">
+        <Card className="bg-zinc-900/50 border-zinc-800/50 backdrop-blur-sm rounded-2xl h-full" style={{ contain: 'layout style paint' }}>
           <CardContent className="p-6 sm:p-8">
             <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${type.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}>
               <type.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
@@ -187,7 +188,8 @@ const TabContentComponent = memo<TabContentProps>(({ type }) => {
             <p className="text-zinc-400 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">{type.description}</p>
             <Button 
               onClick={handleGetStarted}
-              className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg text-sm sm:text-base py-2 sm:py-3 will-change-transform`}
+              className={`bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white rounded-xl border-0 w-full transition-all duration-300 shadow-lg text-sm sm:text-base py-2 sm:py-3`}
+              style={{ transform: 'translate3d(0,0,0)' }}
             >
               Get Started
             </Button>
@@ -212,7 +214,7 @@ const ServiceCard = memo<ServiceCardProps>(({ service, gradient }) => {
   }, [service.name]);
 
   return (
-    <Card className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group will-change-transform">
+    <Card className="bg-zinc-900/30 border-zinc-800/30 backdrop-blur-sm rounded-2xl hover:bg-zinc-800/40 transition-all duration-300 group" style={{ contain: 'layout style paint', transform: 'translate3d(0,0,0)' }}>
       <CardContent className="p-4 sm:p-6">
         <div className="flex justify-between items-start mb-3 sm:mb-4">
           <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-zinc-100 leading-tight flex-1 pr-2">{service.name}</h4>
