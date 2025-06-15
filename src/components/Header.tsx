@@ -10,6 +10,40 @@ interface MobileNavProps {
   onGetStarted: () => void;
 }
 
+const MobileNav = memo<MobileNavProps>(({ navItems, onClose, onSignIn, onGetStarted }) => {
+  return (
+    <div className="md:hidden mt-4 pt-4 border-t border-zinc-800">
+      <div className="flex flex-col space-y-4">
+        {navItems.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="text-zinc-300 hover:text-white transition-colors duration-200 font-medium"
+            onClick={onClose}
+          >
+            {item.name}
+          </a>
+        ))}
+        <div className="flex flex-col space-y-2 pt-4">
+          <Button 
+            variant="ghost" 
+            onClick={onSignIn}
+            className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl justify-start"
+          >
+            Sign In
+          </Button>
+          <Button 
+            onClick={onGetStarted}
+            className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0 justify-start"
+          >
+            Get Started
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -94,40 +128,6 @@ const Header = memo(() => {
         )}
       </nav>
     </header>
-  );
-});
-
-const MobileNav = memo<MobileNavProps>(({ navItems, onClose, onSignIn, onGetStarted }) => {
-  return (
-    <div className="md:hidden mt-4 pt-4 border-t border-zinc-800">
-      <div className="flex flex-col space-y-4">
-        {navItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            className="text-zinc-300 hover:text-white transition-colors duration-200 font-medium"
-            onClick={onClose}
-          >
-            {item.name}
-          </a>
-        ))}
-        <div className="flex flex-col space-y-2 pt-4">
-          <Button 
-            variant="ghost" 
-            onClick={onSignIn}
-            className="text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-xl justify-start"
-          >
-            Sign In
-          </Button>
-          <Button 
-            onClick={onGetStarted}
-            className="bg-gradient-to-r from-zinc-600 to-zinc-700 hover:from-zinc-500 hover:to-zinc-600 text-white rounded-xl border-0 justify-start"
-          >
-            Get Started
-          </Button>
-        </div>
-      </div>
-    </div>
   );
 });
 
